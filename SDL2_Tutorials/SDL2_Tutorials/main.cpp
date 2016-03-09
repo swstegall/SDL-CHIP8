@@ -63,7 +63,7 @@ const int screenSize = 64 * 32;
 streampos size;
 char* memblock;
 unsigned char memory[maxMem];
-ifstream file("PONG", ios::in|ios::binary|ios::ate);
+ifstream file("PONG2", ios::in|ios::binary|ios::ate);
 
 //Current Opcode
 unsigned short opcode;
@@ -426,6 +426,7 @@ void emulateCycle()
 
 	case 0xD000:
 		{
+		
 			unsigned short x = V[(opcode & 0x0F00) >> 8];
 			unsigned short y = V[(opcode & 0x00F0) >> 4];
 			unsigned short height = opcode & 0x000F;
@@ -751,103 +752,109 @@ void setupGraphics()
 
 void setKeys()
 {
-	//User presses a key
-	if(e.type == SDL_KEYDOWN)
-		{
-			//Select surfaces based on key presses
-			switch(e.key.keysym.sym)
+
+	//Handle events on queue
+				while( SDL_PollEvent( &e ) != 0 )
 				{
+					//User requests quit
+					if( e.type == SDL_QUIT )
+					{
+						quit = true;
+					}
+					//User presses a key
+					else if( e.type == SDL_KEYDOWN )
+					{
+						//Select surfaces based on key press
+						switch( e.key.keysym.sym )
+						{
+						case SDLK_x:
+							std::cout << "Key 'x' is pressed" << endl;
+							key[0x0] = 1;
+							break;
 
-			case SDLK_x:
-				std::cout << "Key 'x' is pressed" << endl;
-				key[0x0] = 1;
-				break;
+						case SDLK_1:
+							std::cout << "Key '1' is pressed." << endl;
+							key[0x1] = 1;
+							break;
 
-			case SDLK_1:
-				std::cout << "Key '1' is pressed." << endl;
-				key[0x1] = 1;
-				break;
+						case SDLK_2:
+							std::cout << "Key '2' is pressed." << endl;
+							key[0x2] = 1;
+							break;
 
-			case SDLK_2:
-				std::cout << "Key '2' is pressed." << endl;
-				key[0x2] = 1;
-				break;
+						case SDLK_3:
+							std::cout << "Key '3' is pressed." << endl;
+							key[0x3] = 1;
+							break;
 
-			case SDLK_3:
-				std::cout << "Key '3' is pressed." << endl;
-				key[0x3] = 1;
-				break;
+						case SDLK_q:
+							std::cout << "Key 'q' is pressed." << endl;
+							key[0x4] = 1;
+							break;
 
-			case SDLK_q:
-				std::cout << "Key 'q' is pressed." << endl;
-				key[0x4] = 1;
-				break;
+						case SDLK_w:
+							std::cout << "Key 'w' is pressed." << endl;
+							key[0x5] = 1;
+							break;
 
-			case SDLK_w:
-				std::cout << "Key 'w' is pressed." << endl;
-				key[0x5] = 1;
-				break;
+						case SDLK_e:
+							std::cout << "Key 'e' is pressed." << endl;
+							key[0x6] = 1;
+							break;
 
-			case SDLK_e:
-				std::cout << "Key 'e' is pressed." << endl;
-				key[0x6] = 1;
-				break;
+						case SDLK_a:
+							std::cout << "Key 'a' is pressed." << endl;
+							key[0x7] = 1;
+							break;
 
-			case SDLK_a:
-				std::cout << "Key 'a' is pressed." << endl;
-				key[0x7] = 1;
-				break;
+						case SDLK_s:
+							std::cout << "Key 's' is pressed." << endl;
+							key[0x8] = 1;
+							break;
 
-			case SDLK_s:
-				std::cout << "Key 's' is pressed." << endl;
-				key[0x8] = 1;
-				break;
+						case SDLK_d:
+							std::cout << "Key 'd' is pressed." << endl;
+							key[0x9] = 1;
+							break;
 
-			case SDLK_d:
-				std::cout << "Key 'd' is pressed." << endl;
-				key[0x9] = 1;
-				break;
+						case SDLK_z:
+							std::cout << "Key 'z' is pressed." << endl;
+							key[0xA] = 1;
+							break;
 
-			case SDLK_z:
-				std::cout << "Key 'z' is pressed." << endl;
-				key[0xA] = 1;
-				break;
+						case SDLK_c:
+							std::cout << "Key 'c' is pressed." << endl;
+							key[0xB] = 1;
+							break;
 
-			case SDLK_c:
-				std::cout << "Key 'c' is pressed." << endl;
-				key[0xB] = 1;
-				break;
+						case SDLK_4:
+							std::cout << "Key '4' is pressed." << endl;
+							key[0xC] = 1;
+							break;
 
-			case SDLK_4:
-				std::cout << "Key '4' is pressed." << endl;
-				key[0xC] = 1;
-				break;
+						case SDLK_r:
+							std::cout << "Key 'r' is pressed." << endl;
+							key[0xD] = 1;
+							break;
 
-			case SDLK_r:
-				std::cout << "Key 'r' is pressed." << endl;
-				key[0xD] = 1;
-				break;
+						case SDLK_f:
+							std::cout << "Key 'f' is pressed." << endl;
+							key[0xE] = 1;
+							break;
 
-			case SDLK_f:
-				std::cout << "Key 'f' is pressed." << endl;
-				key[0xE] = 1;
-				break;
+						case SDLK_v:
+							std::cout << "Key 'v' is pressed." << endl;
+							key[0xF] = 1;
+							break;
 
-			case SDLK_v:
-				std::cout << "Key 'v' is pressed." << endl;
-				key[0xF] = 1;
-				break;
-
-			//DEBUG:
-			case SDLK_j:
-				std::cout << "Key 'j' is pressed." << endl;
-				dispMem();
-				break;
-
+						//DEBUG:
+						case SDLK_j:
+							std::cout << "Key 'j' is pressed." << endl;
+							dispMem();
+							break;
+						}
+					}
 				}
-
-	}
-
 }
 
 void printGFX()
@@ -878,6 +885,8 @@ int main( int argc, char* args[] )
 	//Initialize the CHIP-8 System and load the game into memory
 	systemInitialize();
 
+	int frameRate = 0;
+
 	while(!quit)
 	{
 
@@ -892,7 +901,7 @@ int main( int argc, char* args[] )
 		if(drawFlag)
 		{
 		
-			sleep(2);
+			sleep(10);
 			drawGraphics();
 
 		}
@@ -901,6 +910,20 @@ int main( int argc, char* args[] )
 
 		//Store key press state (Press and Release)
 		setKeys();
+
+		//Tbh I have no idea why this works... :^)
+		if(frameRate % 60 == 0)
+		{
+
+			SDL_SetRenderDrawColor( gRenderer, 0x00, 0x00, 0x00, 0xFF );
+			SDL_RenderClear(gRenderer);
+			SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
+			SDL_RenderPresent(gRenderer);
+			frameRate = 0;
+
+		}
+
+		frameRate++;
 
 	}
 
