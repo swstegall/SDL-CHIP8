@@ -1,0 +1,26 @@
+﻿Build started 3/9/2016 3:23:12 AM.
+     1>Project "C:\Users\swste\documents\visual studio 2010\Projects\SDL2_Tutorials\SDL2_Tutorials\SDL2_Tutorials.vcxproj" on node 2 (rebuild target(s)).
+     1>_PrepareForClean:
+         Deleting file "Debug\SDL2_Tutorials.lastbuildstate".
+       InitializeBuildStatus:
+         Creating "Debug\SDL2_Tutorials.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
+         main.cpp
+     1>c:\users\swste\documents\visual studio 2010\projects\sdl2_tutorials\sdl2_tutorials\main.cpp(123): warning C4244: 'initializing' : conversion from 'std::streamoff' to 'unsigned int', possible loss of data
+     1>c:\users\swste\documents\visual studio 2010\projects\sdl2_tutorials\sdl2_tutorials\main.cpp(263): warning C4101: 'tempFlag' : unreferenced local variable
+     1>c:\users\swste\documents\visual studio 2010\projects\sdl2_tutorials\sdl2_tutorials\main.cpp(626): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\swste\documents\visual studio 2010\projects\sdl2_tutorials\sdl2_tutorials\main.cpp(626): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\swste\documents\visual studio 2010\Projects\SDL2_Tutorials\Debug\SDL2_Tutorials.exe" /NOLOGO SDL2.lib SDL2main.lib SDL2_image.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\SDL2_Tutorials.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\swste\documents\visual studio 2010\Projects\SDL2_Tutorials\Debug\SDL2_Tutorials.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\swste\documents\visual studio 2010\Projects\SDL2_Tutorials\Debug\SDL2_Tutorials.lib" /MACHINE:X86 Debug\main.obj
+         SDL2_Tutorials.vcxproj -> C:\Users\swste\documents\visual studio 2010\Projects\SDL2_Tutorials\Debug\SDL2_Tutorials.exe
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"C:\Users\swste\documents\visual studio 2010\Projects\SDL2_Tutorials\Debug\SDL2_Tutorials.exe;#1" /manifest Debug\SDL2_Tutorials.exe.intermediate.manifest
+       FinalizeBuildStatus:
+         Deleting file "Debug\SDL2_Tutorials.unsuccessfulbuild".
+         Touching "Debug\SDL2_Tutorials.lastbuildstate".
+     1>Done Building Project "C:\Users\swste\documents\visual studio 2010\Projects\SDL2_Tutorials\SDL2_Tutorials\SDL2_Tutorials.vcxproj" (rebuild target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:01.03
