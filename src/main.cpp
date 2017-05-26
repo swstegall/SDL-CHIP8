@@ -16,10 +16,16 @@
 
 using namespace std;
 
+const int FRAMES_PER_SECOND = 60;
+
 int main(int argc, char* args[])
 {
   //Initialize game object
   Game play;
+
+  //Timing
+  time_t timer;
+  int total_frames = 0;
 
 	//Set up render system and register input callbacks
 	play.setup_graphics();
@@ -27,40 +33,41 @@ int main(int argc, char* args[])
 	//Initialize the CHIP-8 System and load the game into memory
 	play.system_initialize();
 
-	int frameRate = 0;
-
 	while(!play.quit)
 	{
 		//Emulate Cycle
 		play.emulate_cycle();
 
 		//DEBUG
-		//printGFX();
+		//play.printGFX();
 		//cout << endl;
 
 		//If the draw flag is set, update the screen
 		if(play.drawFlag)
-		{
-			play.sleep(10);
-			play.draw_graphics();
-		}
-
-		play.drawFlag = false;
+    {
+      play.draw_graphics();
+      play.drawFlag = false;
+    }
 
 		//Store key press state (Press and Release)
 		play.set_keys();
 
-		//Tbh I have no idea why this works... :^)
-		if(play.frameRate % 60 == 0)
-		{
-			SDL_SetRenderDrawColor(play.gRenderer, 0x00, 0x00, 0x00, 0xFF);
-			SDL_RenderClear(play.gRenderer);
-			SDL_SetRenderDrawColor(play.gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-			SDL_RenderPresent(play.gRenderer);
-			play.frameRate = 0;
-		}
+    if(total_frames % 2 == 0)
+    {
+      SDL_SetRenderDrawColor(play.gRenderer, 0x00, 0x00, 0x00, 0xFF);
+      SDL_RenderClear(play.gRenderer);
+      SDL_SetRenderDrawColor(play.gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+      SDL_RenderPresent(play.gRenderer);
+    }
 
-		play.frameRate++;
+    //Cap the frame rate to a defined fps value
+     if(time(&timer) < 1000 / FRAMES_PER_SECOND)
+     {
+         //Sleep the remaining frame time
+         SDL_Delay((1000 / FRAMES_PER_SECOND) - time(&timer));
+     }
+
+     ++total_frames;
 	}
 
 	//Free resources and close SDL

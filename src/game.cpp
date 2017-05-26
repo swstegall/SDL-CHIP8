@@ -7,6 +7,11 @@ Game::Game()
 	file.open(game, ios::in|ios::binary|ios::ate);
 }
 
+Game::~Game()
+{
+	file.close();
+}
+
 //Loads File into Memory
 void Game::load_file()
 {
@@ -25,42 +30,42 @@ void Game::load_file()
 }
 
 //Copies Game from Memory into System Memory
-void Game::load_game()
+void Game::load_game(unsigned char (&memory)[maxMem], char* memblock)
 {
 	for(int i = 0; i < size; ++i)
 		memory[i + 512] = memblock[i];
 }
 
 //Clears System Memory
-void Game::clear_memory()
+void Game::clear_memory(unsigned char (&memory)[maxMem], const int &maxMem)
 {
 	for(int i = 0; i < maxMem; ++i)
 		memory[i] = 0;
 }
 
 //Loads Fontset
-void Game::load_fonts()
+void Game::load_fonts(unsigned char (&memory)[maxMem], unsigned char (&chip8_fontset)[fontset_bits])
 {
 	for(int i = 0; i < 80; ++i)
 		memory[i] = chip8_fontset[i];
 }
 
 //Clear Stack
-void Game::clear_stack()
+void Game::clear_stack(unsigned short (&stack)[stackSize], const int &stackSize)
 {
 	for(int i = 0; i < stackSize; ++i)
 		stack[i] = 0;
 }
 
 //Clear Registers
-void Game::clear_registers()
+void Game::clear_registers(unsigned char (&V)[regSize], const int &regSize)
 {
 	for(int i = 0; i < regSize; ++i)
 		V[i] = 0;
 }
 
 //Clear Screen
-void Game::clear_screen()
+void Game::clear_screen(unsigned char (&gfx)[screenSize], const int &screenSize)
 {
 	for(int i = 0; i < screenSize; ++i)
 		gfx[i] = 0;
@@ -76,7 +81,7 @@ void Game::system_initialize()
 	sp = 0;
 
 	//Clear display
-	clear_screen();
+	clear_screen(gfx, screenSize);
 	SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0x00, 0xFF);
 	SDL_RenderClear(gRenderer);
 	SDL_RenderPresent(gRenderer);
@@ -85,20 +90,20 @@ void Game::system_initialize()
 	SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
 
 	//Clear stack
-	clear_stack();
+	clear_stack(stack, stackSize);
 
 	//Clear Registers V0-VF
-	clear_registers();
+	clear_registers(V, regSize);
 
 	//Clear Memory
-	clear_memory();
+	clear_memory(memory, maxMem);
 
 	//Load Fontset
-	load_fonts();
+	load_fonts(memory, chip8_fontset);
 
 	//Load Game into Memory
 	load_file();
-	load_game();
+	load_game(memory, memblock);
 
 	//Reset Timers
 	delay_timer = 0;
@@ -108,7 +113,7 @@ void Game::system_initialize()
 	drawFlag = true;
 
 	//Seed Random
-	srand(NULL);
+	srand(time(NULL));
 }
 
 //Emulate One Cycle
@@ -126,7 +131,7 @@ void Game::emulate_cycle()
 		switch(opcode & 0x000F)
 		{
 		case 0x0000: //0x00E0: Clears the screen
-			clear_screen();
+			clear_screen(gfx, screenSize);
 			drawFlag = true;
 			pc += 2;
 			break;
@@ -570,7 +575,7 @@ void Game::set_keys()
 						switch(e.key.keysym.sym)
 						{
 						case SDLK_x:
-							std::cout << "Key 'x' is pressed" << endl;
+							std::cout << "Key 'x' is pressed." << endl;
 							key[0x0] = 1;
 							break;
 
@@ -653,6 +658,92 @@ void Game::set_keys()
 						case SDLK_j:
 							std::cout << "Key 'j' is pressed." << endl;
 							display_memory();
+							break;
+						}
+					}
+					if(e.type == SDL_KEYUP)
+					{
+						//Select surfaces based on key press
+						switch(e.key.keysym.sym)
+						{
+						case SDLK_x:
+							std::cout << "Key 'x' is released." << endl;
+							key[0x0] = 0;
+							break;
+
+						case SDLK_1:
+							std::cout << "Key '1' is released." << endl;
+							key[0x1] = 0;
+							break;
+
+						case SDLK_2:
+							std::cout << "Key '2' is released." << endl;
+							key[0x2] = 0;
+							break;
+
+						case SDLK_3:
+							std::cout << "Key '3' is released." << endl;
+							key[0x3] = 0;
+							break;
+
+						case SDLK_q:
+							std::cout << "Key 'q' is released." << endl;
+							key[0x4] = 0;
+							break;
+
+						case SDLK_w:
+							std::cout << "Key 'w' is released." << endl;
+							key[0x5] = 0;
+							break;
+
+						case SDLK_e:
+							std::cout << "Key 'e' is released." << endl;
+							key[0x6] = 0;
+							break;
+
+						case SDLK_a:
+							std::cout << "Key 'a' is released." << endl;
+							key[0x7] = 0;
+							break;
+
+						case SDLK_s:
+							std::cout << "Key 's' is released." << endl;
+							key[0x8] = 0;
+							break;
+
+						case SDLK_d:
+							std::cout << "Key 'd' is released." << endl;
+							key[0x9] = 0;
+							break;
+
+						case SDLK_z:
+							std::cout << "Key 'z' is released." << endl;
+							key[0xA] = 0;
+							break;
+
+						case SDLK_c:
+							std::cout << "Key 'c' is released." << endl;
+							key[0xB] = 0;
+							break;
+
+						case SDLK_4:
+							std::cout << "Key '4' is released." << endl;
+							key[0xC] = 0;
+							break;
+
+						case SDLK_r:
+							std::cout << "Key 'r' is released." << endl;
+							key[0xD] = 0;
+							break;
+
+						case SDLK_f:
+							std::cout << "Key 'f' is released." << endl;
+							key[0xE] = 0;
+							break;
+
+						case SDLK_v:
+							std::cout << "Key 'v' is released." << endl;
+							key[0xF] = 0;
 							break;
 						}
 					}

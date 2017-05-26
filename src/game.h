@@ -1,5 +1,5 @@
-#include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL.h>
 #include <iostream>
 #include <fstream>
 
@@ -17,6 +17,7 @@ const int maxMem = 4096;
 const int stackSize = 16;
 const int regSize = 16;
 const int screenSize = 64 * 32;
+const int fontset_bits = 80;
 
 const string game = "games/PONG2";
 
@@ -24,28 +25,29 @@ class Game
 {
 public:
   Game();
-  void keyboard_up(unsigned char key, int x, int y);
-  void keyboard_down(unsigned char key, int x, int y);
+  ~Game();
+  void load_file();
+  void load_game(unsigned char (&memory)[maxMem], char* memblock);
+  void clear_memory(unsigned char (&memory)[maxMem], const int &maxMem);
+  void clear_registers(unsigned char (&V)[regSize], const int &regSize);
+  void load_fonts(unsigned char (&memory)[maxMem], unsigned char (&chip8_fontset)[fontset_bits]);
+  void clear_stack(unsigned short (&stack)[stackSize], const int &stackSize);
+  void clear_screen(unsigned char (&gfx)[screenSize], const int &screenSize);
+  void system_initialize();
+  void emulate_cycle();
+  void display_memory();
   bool initialize();
   bool load_media();
   void close();
   SDL_Texture* load_texture(string path);
-  void load_file();
-  void load_game();
-  void clear_memory();
-  void load_fonts();
-  void clear_stack();
-  void clear_registers();
-  void clear_screen();
-  void system_initialize();
-  void emulate_cycle();
-  void display_memory();
   void draw_call();
   void draw_graphics();
   void setup_graphics();
   void set_keys();
   void print_graphics();
   void sleep(unsigned int mseconds);
+  //void keyboard_up(unsigned char key, int x, int y);
+  //void keyboard_down(unsigned char key, int x, int y);
 
   //main quit flag for the program
   bool quit = false;
@@ -68,10 +70,11 @@ private:
   SDL_Event e;
 
   //Related to Loading ROM into Memory
+  ifstream file;
   streampos size;
   char* memblock;
   unsigned char memory[maxMem];
-  ifstream file;
+
 
   //Current Opcode
   unsigned short opcode;
@@ -102,7 +105,7 @@ private:
   unsigned short sp;
 
   //CHIP-8 Fontset
-  unsigned char chip8_fontset[80] =
+  unsigned char chip8_fontset[fontset_bits] =
   {
     0xF0, 0x90, 0x90, 0x90, 0xF0, // 0
     0x20, 0x60, 0x20, 0x20, 0x70, // 1
