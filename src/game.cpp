@@ -352,7 +352,7 @@ void Game::emulate_cycle()
 						}
 					}
 
-				// If we didn't received a keypress, skip this cycle and try again.
+				// If we didn't receive a keypress, skip this cycle and try again.
 				if(!keyPress)
 					return;
 				pc += 2;
@@ -448,7 +448,7 @@ bool Game::initialize()
 			printf("Warning: Linear texture filtering not enabled!");
 
 		//Create window
-		gWindow = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, (SCREEN_WIDTH * X_SCALE) / 2, (SCREEN_HEIGHT * Y_SCALE) / 2, SDL_WINDOW_SHOWN);
+		gWindow = SDL_CreateWindow("SDL-CHIP8", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, (SCREEN_WIDTH * X_SCALE) / 2, (SCREEN_HEIGHT * Y_SCALE) / 2, SDL_WINDOW_SHOWN);
 		if(gWindow == NULL)
 		{
 			printf("Window could not be created! SDL Error: %s\n", SDL_GetError());
@@ -530,6 +530,11 @@ SDL_Texture* Game::load_texture(std::string path)
 
 void Game::draw_call()
 {
+	//Blank the screen with black before composing the frame
+	SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0x00, 0xFF);
+	SDL_RenderClear(gRenderer);
+
+	//Compose the frame with white
 	SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
 	int rowNum;
 

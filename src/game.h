@@ -8,8 +8,9 @@ using namespace std;
 //Screen dimension constants
 const int SCREEN_WIDTH = 128;
 const int SCREEN_HEIGHT = 64;
-const int X_SCALE = 6;
-const int Y_SCALE = 6;
+const int X_SCALE = 12;
+const int Y_SCALE = 12;
+const int FRAME_DELAY = 10;
 
 //CHIP-8 Emulator:
 //Emulation Constants
@@ -19,7 +20,7 @@ const int regSize = 16;
 const int screenSize = 64 * 32;
 const int fontset_bits = 80;
 
-const string game = "games/PONG2";
+const string game = "../../games/PONG2";
 
 class Game
 {
