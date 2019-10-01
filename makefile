@@ -1,5 +1,5 @@
 #OBJS specifies which files to compile as part of the project
-OBJS = ./src/*.cpp
+OBJS = ./SDL_CHIP8/*.cpp
 
 #CC specifies which compiler we're using
 CC = g++
@@ -12,7 +12,7 @@ COMPILER_FLAGS = -w
 LINKER_FLAGS = -lSDL2 -lSDL2_image
 
 #OBJ_NAME specifies the name of our exectuable
-OBJ_NAME = ./build/linux/SDL-CHIP8
+OBJ_NAME = ./linux_build/SDL-CHIP8
 
 #This is the target that compiles our executable
 all : $(OBJS)

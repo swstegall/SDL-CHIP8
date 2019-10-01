@@ -1,0 +1,7 @@
+.vs/*
+x64/*
+games/
+SDL-CHIP8/Debug/*
+SDL-CHIP8/x64
+*.vcxproj
+*.vcxproj.*

@@ -1,7 +1,10 @@
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL.h>
+#pragma once
+
+#include <SDL_image.h>
+#include <SDL.h>
 #include <iostream>
 #include <fstream>
+#include <ctime>
 
 using namespace std;
 
@@ -20,7 +23,7 @@ const int regSize = 16;
 const int screenSize = 64 * 32;
 const int fontset_bits = 80;
 
-const string game = "../../games/PONG2";
+const string game = "./games/PONG2";
 
 class Game
 {
